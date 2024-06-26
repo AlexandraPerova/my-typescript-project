@@ -1,0 +1,1 @@
+my-typescript-project git:(main) ✗ npx playwright test --ui  Команда для запуска тестов
