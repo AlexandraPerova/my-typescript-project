@@ -1,47 +1,87 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TypeScript Tutorial</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Форма авторизации</title>
+    <style>
+        body {
+            background-color: #e0f7fa;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .auth-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 50%; /* Установите ширину формы */
+            max-width: 600px; /* Максимальная ширина формы */
+        }
+        .auth-form h1 {
+            margin-bottom: 20px;
+        }
+        .auth-form label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        .auth-form input[type="text"],
+        .auth-form input[type="email"],
+        .auth-form input[type="tel"],
+        .auth-form input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .auth-form input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .auth-form button {
+            background-color: #483D8B;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .auth-form button:hover {
+            background-color: #2F4F4F;
+        }
+    </style>
 </head>
 <body>
+<div class="auth-form">
+    <h1>Форма авторизации</h1>
+    <form action="#" method="post">
+        <label for="first-name">Имя:</label>
+        <input type="text" id="first-name" name="first-name" required>
 
-<div class="wrapper">
-    <h1>Finance Logger</h1>
+        <label for="last-name">Фамилия:</label>
+        <input type="text" id="last-name" name="last-name" required>
 
-    <!-- output list -->
-    <ul class="item-list">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
 
-    </ul>
-</div>
+        <label for="phone">Телефон:</label>
+        <input type="tel" id="phone" name="phone" required>
 
-<footer>
-    <form class="new-item-form">
-        <div class="field">
-            <label>Type:</label>
-            <select id="type">
-                <option value="invoice">Invoice</option>
-                <option value="payment">Payment</option>
-            </select>
-        </div>
-        <div class="field">
-            <label>To / From:</label>
-            <input type="text" id="tofrom">
-        </div>
-        <div class="field">
-            <label>Details:</label>
-            <input type="text" id="details">
-        </div>
-        <div class="field">
-            <label>Amount (£):</label>
-            <input type="number" id="amount">
-        </div>
-        <button>Add</button>
+        <label for="birthdate">Дата рождения:</label>
+        <input type="date" id="birthdate" name="birthdate" required>
+
+        <label>
+            <input type="checkbox" name="terms" required>
+            Согласны ли с условиями?
+        </label>
+
+        <button type="submit">Авторизоваться</button>
     </form>
-
-    <a href="https://www.thenetninja.co.uk">The Net Ninja</a>
-</footer>
+</div>
 
 <script src='sandbox.js'></script>
 </body>
