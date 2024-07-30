@@ -82,3 +82,61 @@ const function5 = (a :number = 0,b :number = 100):number =>
     Math.max(a,b);
 
 console.log(function5());
+
+//как создать массив
+const arr_1: number[] = [];
+arr_1.push(55, 66, 67);
+arr_1[3]=77;
+console.log(arr_1);
+arr_1.length = 0;
+console.log(arr_1);
+
+//Создание read only массива
+const arr_2: readonly number[] = [22,33,44,55];
+//arr_2.push(88);
+//arr_2[5]=22;
+console.log(arr_2);
+
+//Автоопределение типа
+const arr_3 = ['Hello', 'TS'];
+//arr_3.push(5);
+console.log(arr_3);
+
+//Декомпозиция массива
+const arr_4: number[] = [222,333,444,555];
+const [, a,b, ...c] = arr_4;
+console.log(a, b, c);
+
+//Создание двумерного массива
+//const arr_5: number[][] = [[33,44,45],[55,66,77]];
+const arr_5: number[][] = [];
+arr_5[5]=[11,22];
+arr_5.push([44,55])
+console.log(arr_5[0],[1])
+
+console.log(arr_5);
+
+//Смешанные по типу массивы
+const arr_6: (number | boolean)[] = [2,3,false]
+console.log(arr_6);
+const arr_7: Array<string | number> = [33,44,'hello'];
+console.log(arr_7);
+
+//Кортежи
+const cort_01: [string, number] = ['Alex', 55]
+console.log(cort_01);
+cort_01.push('data');
+//cort_01.push(false);
+console.log(cort_01);
+
+//Необязательный элемент в кортеже
+const cort_02: [string, number, number?] = ['Alex', 55];
+console.log(cort_02);
+
+console.log(cort_02[0]);
+cort_02[0] = 'Hello';
+console.log(cort_02);
+
+//Если количество элементов в кортеже не определено
+const cort_03: [number, ...string[]] = [222, 'Hello', 'You'];
+console.log(cort_03);
