@@ -75,6 +75,11 @@ class Btn {
     text: string;
     className: string[];
 
+    constructor(text: string, className: string[]) {
+        this.text = text;
+        this.className = className;
+    }
+
     create(): HTMLButtonElement {
         const button  = document.createElement('button');
         button.textContent = this.text;
@@ -83,7 +88,7 @@ class Btn {
     }
 }
 
-const b_02 = new Btn();
+const b_02 = new Btn('push', ['buttonClass']);
 b_02.text = 'Button test';
 b_02.className = ['btn', 'btn-success'];
 
