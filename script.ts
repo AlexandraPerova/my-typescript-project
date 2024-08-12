@@ -1,133 +1,138 @@
-//TS
-const user: {name: string; email: string} = {
-    name: "ivanov",
-    email: "ivanov@mail.ru"
-}
-console.log(user['email']);
-
-user.name = "Oleg";
-//user.name = 44;
-console.log(user);
-
-// Необязательные свойства
-
-const user_2: {name: string; email: string; age?: number} = {
-    name: "Oleg",
-    email: "Oleg@mail.ru",
-    age: 44
-};
-
-console.log(user_2);
-
-// Проверяем свойств в объекте
-console.log(user_2.email);
-if ('test' in user_2) {
-    console.log(1)
-}
-else {
-    console.log(0)
+class T_01 {
+    name: string = " ";
 }
 
-//Обращение к необязательному свойству
-console.log(user_2.age);
-
-//Объект как аругент функции
-function userProcess(some_argument: {name: string, email: string}) {
-    console.log(some_argument.email);
-}
-userProcess(user_2);
-
-const obj_1 = {name: 'Ivan', email: '22ivanov@mail.ru', test: false}
-userProcess(obj_1);
-
-//Декомпозиция
-
-function foo({name, email} : {name: string, email: string}) {
-    console.log(name, email);
-}
-
-foo(user_2);
-
-// Объявляем класс
-class Button {
-    text : string | undefined;
-    className : string[] | undefined;
-}
-
-const b_01 = new Button();
-b_01.text = "Push me";
-b_01.className = ['btn', 'btn-success']
-console.log(b_01);
-
-//Заносим данные сразу в класс
-
-class Header {
-    text: string = 'Header 1';
-    fontsize: string = '24px';
+class T_02 extends T_01 {
+    email: string = " ";
 
 }
-const h_01 = new Header();
-console.log(h_01);
 
-//Методы
+const obj_2 = new T_02();
+console.log(obj_2);
 
-class Btn {
+class T_03 extends T_02 {
+    showData(): void {
+        console.log(this.name, this.email);
+    }
+}
+
+const obj_03 = new T_03();
+obj_03.name = "test"
+obj_03.email = "test@mail.ru"
+obj_03.showData();
+
+class T_04 extends T_01 {
+    email: string = " ";
+    constructor(name: string, email: string) {
+        super();
+        this.name = name;
+        this.email = email;
+    }
+    showData(): void {
+        console.log(this.name, this.email);
+    }
+    showInfo(): string {
+        return this.name + this.email;
+    }
+}
+
+const obj_04 = new T_04('hello', 'test@mail.ua');
+obj_04.showData();
+
+class T_05 extends T_04 {
+    age: number  = 0;
+    constructor(name: string, email: string, age: number) {
+        super(name,email);
+        this.age = age;
+    }
+    showData(): void {
+        super.showData();
+        console.log(this.age)
+    }
+    showInfo(): string {
+        const s = super.showInfo();
+        return s + this.age;
+    }
+}
+const obj_05 = new T_05 ('Hi', 'hello@email.ru', 55);
+console.log(obj_05.showInfo());
+
+//===================================
+
+class ElementHTML {
     text: string;
-    className: string[];
+    tag: string = 'DIV';
 
-    constructor(text: string, className: string[]) {
-        this.text = text;
-        this.className = className;
+    constructor(a: string) {
+        this.text = a;
     }
 
-    create(): HTMLButtonElement {
-        const button  = document.createElement('button');
-        button.textContent = this.text;
-        this.className.forEach(item => button.classList.add(item));
-        return button;
+    render(): HTMLElement {
+        const div = document.createElement(this.tag);
+        div.textContent = this.text;
+        return div;
     }
 }
 
-const b_02 = new Btn('push', ['buttonClass']);
-b_02.text = 'Button test';
-b_02.className = ['btn', 'btn-success'];
+const div_1 = new ElementHTML('hello');
+document.body.append(div_1.render());
 
-console.log(b_02);
-document.body.append(b_02.create());
+class ElementHTMLCSS extends ElementHTML {
+    cssClass: string[];
 
-b_02.text = 'Button test 2';
-b_02.className = ['btn', 'btn-success'];
-document.body.append(b_02.create());
-
-// конструктор
-class ButtonElement {
-    text: string;
-    className: string[];
-    readonly role: string;
-    readonly type: string = 'button';
-
-
-    constructor(text: string, className: string[]) {
-        this.text = text;
-        this.className = className;
-        this.role = 'button';
+    constructor(a: string, b: string[]) {
+        super(a);
+        this.cssClass = b;
     }
-
-    create(): HTMLButtonElement {
-        const button  = document.createElement('button');
-        button.setAttribute('role', this.role);
-        button.setAttribute('type', this.type);
-        button.textContent = this.text;
-        this.className.forEach(item => button.classList.add(item));
-        return button;
+    render(): HTMLElement{
+        const div = super.render();
+        this.cssClass.forEach(item => div.classList.add(item));
+        return div;
     }
 }
 
-const b_03 = new ButtonElement('Click on me', ['btn', 'btn-primary']);
-console.log(b_03);
-document.body.append(b_03.create());
+const div_2 = new ElementHTMLCSS('div with css', ['red', 'bold']);
+document.body.append(div_2.render());
 
-const b_04 = new ButtonElement('new button', ['btn', 'btn-warning']);
-b_04.text = "push push push";
-//b_04.role = "new";
-document.body.append(b_04.create());
+class ElementImage extends ElementHTMLCSS{
+    src: string = '';
+    constructor(src: string, b: string[], a: string) {
+        super(a,b);
+        this.src = src;
+        this.tag = 'img';
+    }
+    render(): HTMLElement{
+        const img =document.createElement(this.tag);
+    img.setAttribute('src', this.src);
+    img.setAttribute('alt', this.text);
+    this.cssClass.forEach(item => img.classList.add(item));
+    return img;
+    }
+}
+
+const img = new ElementImage('./image/licensed-image.jpeg', ['responsive-image'], 'Picture');
+document.body.append(img.render());
+
+class PictureHTML extends ElementImage {
+    //576, 768, 992
+    source: string[];
+    constructor(src: string, b: string[], a: string, source: string[]) {
+        super(src, b, a);
+        this.source = source;
+    }
+    render(): HTMLElement{
+        const img = super.render();
+        const pictures = document.createElement('picture');
+        this.source.forEach( item => {
+            const source = document.createElement('source');
+            source.setAttribute('srcset', item);
+            source.setAttribute('media', "min-width: 600px");
+            pictures.append(source);
+        });
+        pictures.append(img);
+        return pictures;
+    }
+}
+
+const pic = new PictureHTML('./image/doroga.png', ['responsive-image'], 'Дорога', ['./image/licensed-image.jpeg']);
+document.body.append(pic.render());
