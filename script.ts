@@ -1,138 +1,87 @@
-class T_01 {
-    name: string = " ";
-}
+/* class T01 {
+    private n1: number = 33;
+    private n2: number = 55;
+    public access: boolean = false;
+    constructor(a: boolean) {
+        this.access = a;
+    }
+    public get N1 (): number {
+        return (this.access) ? this.n1 : 0;
+    }
+}*/
 
-class T_02 extends T_01 {
-    email: string = " ";
+class T01 {
+    private _n1: number = 33;
+    private _n2: number = 55;
+    public get n1 (): number {
+        return this._n1;
+    }
+    public get n2 (): number {
+        return this._n2;
+    }
 
-}
-
-const obj_2 = new T_02();
-console.log(obj_2);
-
-class T_03 extends T_02 {
-    showData(): void {
-        console.log(this.name, this.email);
+    public set n1 (a:number) {
+        this._n1 = a;
     }
 }
 
-const obj_03 = new T_03();
-obj_03.name = "test"
-obj_03.email = "test@mail.ru"
-obj_03.showData();
+const obj1 = new T01();
+console.log(obj1.n1);
+obj1.n1 = 777;
+console.log(obj1.n1);
 
-class T_04 extends T_01 {
-    email: string = " ";
-    constructor(name: string, email: string) {
-        super();
-        this.name = name;
-        this.email = email;
-    }
-    showData(): void {
-        console.log(this.name, this.email);
-    }
-    showInfo(): string {
-        return this.name + this.email;
-    }
-}
 
-const obj_04 = new T_04('hello', 'test@mail.ua');
-obj_04.showData();
-
-class T_05 extends T_04 {
-    age: number  = 0;
-    constructor(name: string, email: string, age: number) {
-        super(name,email);
-        this.age = age;
-    }
-    showData(): void {
-        super.showData();
-        console.log(this.age)
-    }
-    showInfo(): string {
-        const s = super.showInfo();
-        return s + this.age;
-    }
-}
-const obj_05 = new T_05 ('Hi', 'hello@email.ru', 55);
-console.log(obj_05.showInfo());
-
-//===================================
-
-class ElementHTML {
-    text: string;
-    tag: string = 'DIV';
-
-    constructor(a: string) {
-        this.text = a;
+class T02 extends T01 {
+    public get n1(): number {
+        return super.n1;
     }
 
-    render(): HTMLElement {
-        const div = document.createElement(this.tag);
-        div.textContent = this.text;
-        return div;
+    public set n1 (a:number) {
+        super.n1 = a;
+    }
+};
+
+const obj2 = new T02;
+console.log(obj2.n1);
+obj2.n1 = 1000;
+console.log(obj2.n1);
+
+
+class T03 {
+    protected _n1: number = 33;
+    protected _n2: number = 55;
+    public get n1 (): number {
+        return this._n1;
+    }
+    public get n2 (): number {
+        return this._n2;
+    }
+
+    public set n1 (a:number) {
+        this._n1 = a;
     }
 }
 
-const div_1 = new ElementHTML('hello');
-document.body.append(div_1.render());
+const obj3 =  new T03();
+console.log(obj3.n1);
+obj3.n1 = 444;
+console.log(obj3.n1);
 
-class ElementHTMLCSS extends ElementHTML {
-    cssClass: string[];
-
-    constructor(a: string, b: string[]) {
-        super(a);
-        this.cssClass = b;
+class T04 extends T03 {
+    public get n1(): number {
+        return this._n1;
     }
-    render(): HTMLElement{
-        const div = super.render();
-        this.cssClass.forEach(item => div.classList.add(item));
-        return div;
+    public set n1 (a: number) {
+        this._n1 = a;
     }
 }
 
-const div_2 = new ElementHTMLCSS('div with css', ['red', 'bold']);
-document.body.append(div_2.render());
+const obj4 =  new T04();
+console.log(obj4.n1);
+obj4.n1 = 444;
+console.log(obj4.n1);
 
-class ElementImage extends ElementHTMLCSS{
-    src: string = '';
-    constructor(src: string, b: string[], a: string) {
-        super(a,b);
-        this.src = src;
-        this.tag = 'img';
-    }
-    render(): HTMLElement{
-        const img =document.createElement(this.tag);
-    img.setAttribute('src', this.src);
-    img.setAttribute('alt', this.text);
-    this.cssClass.forEach(item => img.classList.add(item));
-    return img;
-    }
-}
 
-const img = new ElementImage('./image/licensed-image.jpeg', ['responsive-image'], 'Picture');
-document.body.append(img.render());
 
-class PictureHTML extends ElementImage {
-    //576, 768, 992
-    source: string[];
-    constructor(src: string, b: string[], a: string, source: string[]) {
-        super(src, b, a);
-        this.source = source;
-    }
-    render(): HTMLElement{
-        const img = super.render();
-        const pictures = document.createElement('picture');
-        this.source.forEach( item => {
-            const source = document.createElement('source');
-            source.setAttribute('srcset', item);
-            source.setAttribute('media', "min-width: 600px");
-            pictures.append(source);
-        });
-        pictures.append(img);
-        return pictures;
-    }
-}
 
-const pic = new PictureHTML('./image/doroga.png', ['responsive-image'], 'Дорога', ['./image/licensed-image.jpeg']);
-document.body.append(pic.render());
+
